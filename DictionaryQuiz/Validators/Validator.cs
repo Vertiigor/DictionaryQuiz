@@ -8,14 +8,9 @@ namespace DictionaryQuiz.Validators
 
         public void ShowError(List<string> errors)
         {
-            string fullError = string.Empty;
+            string fullError = string.Join("\n", errors);
 
-            foreach (var error in errors)
-            {
-                fullError += error + "\n";
-            }
-
-            MessageBox.Show(fullError);
+            MessageBox.Show(fullError, "Attention!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
