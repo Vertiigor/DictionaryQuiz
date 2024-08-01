@@ -2,9 +2,9 @@
 
 namespace DictionaryQuiz.Validators
 {
-    internal class LanguageDefinitionValidator : IValidator<LanguageDefinition>
+    internal class LanguageDefinitionValidator : Validator<LanguageDefinition>
     {
-        public bool Validate(LanguageDefinition definition, out List<string> errors)
+        public override bool Validate(LanguageDefinition definition, out List<string> errors)
         {
             errors = new List<string>();
 

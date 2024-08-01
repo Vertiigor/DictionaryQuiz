@@ -2,9 +2,9 @@
 
 namespace DictionaryQuiz.Validators
 {
-    internal class QuizPreferencesValidator : IValidator<QuizPreferences>
+    internal class QuizPreferencesValidator : Validator<QuizPreferences>
     {
-        public bool Validate(QuizPreferences preferences, out List<string> errors)
+        public override bool Validate(QuizPreferences preferences, out List<string> errors)
         {
             errors = new List<string>();
 

@@ -49,7 +49,7 @@ namespace DictionaryQuiz
             }
             else
             {
-                ShowError(errors);
+                validator.ShowError(errors);
             }
         }
 
@@ -58,18 +58,6 @@ namespace DictionaryQuiz
             configuration.QuizPreferences = preferences;
 
             configurationSaver.SaveConfiguration(configFilePath, configuration);
-        }
-
-        private static void ShowError(List<string> errors)
-        {
-            string fullError = string.Empty;
-
-            foreach (var error in errors)
-            {
-                fullError += error + "\n";
-            }
-
-            MessageBox.Show(fullError);
         }
 
         private void FillPreferencesByInput()

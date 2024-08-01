@@ -41,7 +41,7 @@ namespace DictionaryQuiz
             }
             else
             {
-                ShowError(errors);
+                validator.ShowError(errors);
             }
         }
 
@@ -57,18 +57,6 @@ namespace DictionaryQuiz
             definition.Name = NameTextField.Text;
             definition.RequiredInput = RequiredInputTextField.Text;
             definition.AdditionalFields = AdditionalFieldsTextField.Text.Split(',').ToList();
-        }
-
-        private static void ShowError(List<string> errors)
-        {
-            string fullError = string.Empty;
-
-            foreach (var error in errors)
-            {
-                fullError += error + "\n";
-            }
-
-            MessageBox.Show(fullError);
         }
     }
 }
