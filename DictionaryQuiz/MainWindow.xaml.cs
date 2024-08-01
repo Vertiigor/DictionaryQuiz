@@ -20,6 +20,8 @@ namespace DictionaryQuiz
         private DataLoader dataLoader;
         private ConfigurationLoader configurationLoader;
         private Quiz currentQuiz;
+        private LanguageEntity currentWord;
+        private LanguageDefinition currentLanguage;
 
         public MainWindow()
         {
@@ -31,6 +33,8 @@ namespace DictionaryQuiz
             dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(Configuration, "English");
             dataLoader = dataLoaderFactory.CreateLoader();
             currentQuiz = new Quiz();
+            currentWord = new LanguageEntity();
+            currentLanguage = new LanguageDefinition();
 
             foreach (var language in Configuration.Languages)
             {
@@ -69,6 +73,7 @@ namespace DictionaryQuiz
 
             dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(Configuration, selectedLanguage);
             dataLoader = dataLoaderFactory.CreateLoader();
+            currentLanguage = Configuration.Languages.First(x => x.Name == selectedLanguage);
         }
 
         private void MakeInputComponentsVisible()
@@ -98,7 +103,16 @@ namespace DictionaryQuiz
 
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(configFilePath);
+            if (InputTextField.Text == currentWord.AdditionalFields[currentLanguage.RequiredInput])
+            {
+                MessageBox.Show("Correct");
+            }
+            else
+            {
+                MessageBox.Show("Incorrect");
+            }
+
+            InputTextField.Text = string.Empty;
         }
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -126,7 +140,8 @@ namespace DictionaryQuiz
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            WordContent.Content = $"{GetRandomWord().Word}";
+            currentWord = GetRandomWord();
+            WordContent.Content = $"{currentWord.Word}";
         }
     }
 }
