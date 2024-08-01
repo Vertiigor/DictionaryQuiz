@@ -14,7 +14,7 @@ namespace DictionaryQuiz
     public partial class LanguagePreferencesWindow : Window
     {
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
-        private ConfigurationRoot Configuration;
+        private ConfigurationRoot configuration;
         private ConfigurationLoader configurationLoader;
         private LanguageDefinition definition;
         private ConfigurationSaver configurationSaver;
@@ -26,11 +26,11 @@ namespace DictionaryQuiz
 
             configurationLoader = new ConfigurationLoader();
             configurationSaver = new ConfigurationSaver();
-            Configuration = configurationLoader.LoadConfiguration(configFilePath);
+            configuration = configurationLoader.LoadConfiguration(configFilePath);
             definition = new LanguageDefinition();
             validator = new LanguageDefinitionValidator();
 
-            foreach (var language in Configuration.Languages)
+            foreach (var language in configuration.Languages)
             {
                 var newItem = new ListBoxItem();
                 newItem.Content = $"{language.Name}";
@@ -48,7 +48,7 @@ namespace DictionaryQuiz
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.definition = Configuration.Languages[LanguagesListBox.SelectedIndex];
+            this.definition = configuration.Languages[LanguagesListBox.SelectedIndex];
 
             MakeInputComponentsEnabled();
             FillInputComponents();
@@ -79,10 +79,10 @@ namespace DictionaryQuiz
 
         private void SaveNewDefinition()
         {
-            Configuration.Languages.Remove(Configuration.Languages.First(x => x.Name == definition.Name));
-            Configuration.Languages.Add(definition);
+            configuration.Languages.Remove(configuration.Languages.First(x => x.Name == definition.Name));
+            configuration.Languages.Add(definition);
 
-            configurationSaver.SaveConfiguration(configFilePath, Configuration);
+            configurationSaver.SaveConfiguration(configFilePath, configuration);
         }
 
         private void FillDefinitionByInput()

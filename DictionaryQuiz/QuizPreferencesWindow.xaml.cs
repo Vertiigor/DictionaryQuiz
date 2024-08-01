@@ -13,7 +13,7 @@ namespace DictionaryQuiz
     public partial class QuizPreferencesWindow : Window
     {
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
-        private ConfigurationRoot Configuration;
+        private ConfigurationRoot configuration;
         private ConfigurationLoader configurationLoader;
         private QuizPreferences preferences;
         private ConfigurationSaver configurationSaver;
@@ -25,7 +25,7 @@ namespace DictionaryQuiz
 
             configurationLoader = new ConfigurationLoader();
             configurationSaver = new ConfigurationSaver();
-            Configuration = configurationLoader.LoadConfiguration(configFilePath);
+            configuration = configurationLoader.LoadConfiguration(configFilePath);
             preferences = new QuizPreferences();
             validator = new QuizPreferencesValidator();
 
@@ -34,7 +34,7 @@ namespace DictionaryQuiz
 
         private void FillInput()
         {
-            QuestionCountTextField.Text = $"{Configuration.QuizPreferences.QuestionsCount}";
+            QuestionCountTextField.Text = $"{configuration.QuizPreferences.QuestionsCount}";
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -55,9 +55,9 @@ namespace DictionaryQuiz
 
         private void SaveNewPreferences()
         {
-            Configuration.QuizPreferences = preferences;
+            configuration.QuizPreferences = preferences;
 
-            configurationSaver.SaveConfiguration(configFilePath, Configuration);
+            configurationSaver.SaveConfiguration(configFilePath, configuration);
         }
 
         private static void ShowError(List<string> errors)
