@@ -1,14 +1,7 @@
-﻿using DictionaryQuiz.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DictionaryQuiz.Validators
+﻿namespace DictionaryQuiz.Validators
 {
-    internal interface IValidator<T> where T : LanguageEntity
+    public interface IValidator<T>
     {
-        public bool Validate(T entity, string input);
+        public bool Validate(T entity, out List<string> errors);
     }
 }
