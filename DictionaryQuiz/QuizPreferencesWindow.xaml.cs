@@ -1,6 +1,7 @@
 ﻿using DictionaryQuiz.Loaders;
 using DictionaryQuiz.Models;
 using DictionaryQuiz.Savers;
+using DictionaryQuiz.Validators;
 using System.IO;
 using System.Windows;
 
@@ -16,6 +17,7 @@ namespace DictionaryQuiz
         private ConfigurationLoader configurationLoader;
         private QuizPreferences preferences;
         private ConfigurationSaver configurationSaver;
+        private QuizPreferencesValidator validator;
 
         public QuizPreferencesWindow()
         {
@@ -25,6 +27,7 @@ namespace DictionaryQuiz
             configurationSaver = new ConfigurationSaver();
             Configuration = configurationLoader.LoadConfiguration(configFilePath);
             preferences = new QuizPreferences();
+            validator = new QuizPreferencesValidator();
 
             FillInput();
         }
@@ -36,12 +39,37 @@ namespace DictionaryQuiz
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            SetPreferencesByInput();
+
+            if (validator.Validate(preferences, out var errors))
+            {
+                Configuration.QuizPreferences = preferences;
+
+                configurationSaver.SaveConfiguration(configFilePath, Configuration);
+
+                this.Close();
+            }
+            else
+            {
+                ShowError(errors);
+            }
+        }
+
+        private static void ShowError(List<string> errors)
+        {
+            string fullError = string.Empty;
+
+            foreach (var error in errors)
+            {
+                fullError += error + "\n";
+            }
+
+            MessageBox.Show(fullError);
+        }
+
+        private void SetPreferencesByInput()
+        {
             preferences.QuestionsCount = Convert.ToInt32(QuestionCountTextField.Text);
-            Configuration.QuizPreferences = preferences;
-
-            configurationSaver.SaveConfiguration(configFilePath, Configuration);
-
-            this.Close();
         }
     }
 }
