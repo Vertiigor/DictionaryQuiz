@@ -39,13 +39,11 @@ namespace DictionaryQuiz
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            SetPreferencesByInput();
+            FillPreferencesByInput();
 
             if (validator.Validate(preferences, out var errors))
             {
-                Configuration.QuizPreferences = preferences;
-
-                configurationSaver.SaveConfiguration(configFilePath, Configuration);
+                SaveNewPreferences();
 
                 this.Close();
             }
@@ -53,6 +51,13 @@ namespace DictionaryQuiz
             {
                 ShowError(errors);
             }
+        }
+
+        private void SaveNewPreferences()
+        {
+            Configuration.QuizPreferences = preferences;
+
+            configurationSaver.SaveConfiguration(configFilePath, Configuration);
         }
 
         private static void ShowError(List<string> errors)
@@ -67,7 +72,7 @@ namespace DictionaryQuiz
             MessageBox.Show(fullError);
         }
 
-        private void SetPreferencesByInput()
+        private void FillPreferencesByInput()
         {
             preferences.QuestionsCount = Convert.ToInt32(QuestionCountTextField.Text);
         }

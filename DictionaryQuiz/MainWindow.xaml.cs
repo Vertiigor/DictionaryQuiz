@@ -127,12 +127,6 @@ namespace DictionaryQuiz
             QuestionsCountLabel.Content = $"1 / {Configuration.QuizPreferences.QuestionsCount}";
         }
 
-        private void Preferences_Click(object sender, RoutedEventArgs e)
-        {
-            QuizPreferencesWindow preferencesWindow = new QuizPreferencesWindow();
-            preferencesWindow.Show();
-        }
-
         private void History_Click(object sender, RoutedEventArgs e)
         {
 
@@ -142,6 +136,18 @@ namespace DictionaryQuiz
         {
             currentWord = GetRandomWord();
             WordContent.Content = $"{currentWord.Word}";
+        }
+
+        private void QuizPreferences_Click(object sender, RoutedEventArgs e)
+        {
+            QuizPreferencesWindow preferencesWindow = new QuizPreferencesWindow();
+            preferencesWindow.Show();
+        }
+
+        private void LanguagePreferences_Click(object sender, RoutedEventArgs e)
+        {
+            LanguagePreferencesWindow preferencesWindow = new LanguagePreferencesWindow();
+            preferencesWindow.Show();
         }
     }
 }

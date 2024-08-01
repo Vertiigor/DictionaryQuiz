@@ -8,7 +8,7 @@ namespace DictionaryQuiz.Validators
         {
             errors = new List<string>();
 
-            if(preferences.QuestionsCount < 1)
+            if (preferences.QuestionsCount < 1)
             {
                 errors.Add("Questions count must be a positive integer.");
             }
