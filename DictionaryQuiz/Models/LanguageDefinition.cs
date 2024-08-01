@@ -2,7 +2,7 @@
 
 namespace DictionaryQuiz.Models
 {
-    public class LanguageDefinition
+    public class LanguageDefinition : IValidatable
     {
         [JsonProperty("name")]
         public string Name { get; set; }

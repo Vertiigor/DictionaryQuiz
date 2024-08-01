@@ -2,7 +2,7 @@
 
 namespace DictionaryQuiz.Models
 {
-    public class QuizPreferences
+    public class QuizPreferences : IValidatable
     {
         [JsonProperty("questionsCount")]
         public int QuestionsCount { get; set; }

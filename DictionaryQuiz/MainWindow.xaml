@@ -24,7 +24,10 @@
                 <MenuItem x:Name="QuizMenuItem" Header="Quiz">
                     <MenuItem x:Name="StartNew" Header="_Start new" Click="StartNew_Click" />
                     <MenuItem x:Name="History" Header="_Quiz history" Click="History_Click" />
-                    <MenuItem x:Name="Preferences" Header="_Language preferences" Click="Preferences_Click" />
+                    <MenuItem x:Name="QuizPreferences" Header="Preferences" Click="QuizPreferences_Click" />
+                </MenuItem>
+                <MenuItem x:Name="LanguageMenuItem" Header="Language">
+                    <MenuItem x:Name="LanguagePreferences" Header="Preferences" Click="LanguagePreferences_Click"/>
                 </MenuItem>
                 <MenuItem x:Name="HelpMenuItem" Header="Help">
                     <MenuItem x:Name="About" Header="_About" />

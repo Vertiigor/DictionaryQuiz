@@ -16,10 +16,12 @@ namespace DictionaryQuiz
         private DataLoaderFactory dataLoaderFactory;
         private string dictionaryFilePath;
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
-        private ConfigurationRoot Configuration;
+        private ConfigurationRoot configuration;
         private DataLoader dataLoader;
         private ConfigurationLoader configurationLoader;
         private Quiz currentQuiz;
+        private LanguageEntity currentWord;
+        private LanguageDefinition currentLanguage;
 
         public MainWindow()
         {
@@ -27,12 +29,14 @@ namespace DictionaryQuiz
 
             dictionaryFilePath = string.Empty;
             configurationLoader = new ConfigurationLoader();
-            Configuration = configurationLoader.LoadConfiguration(configFilePath);
-            dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(Configuration, "English");
+            configuration = configurationLoader.LoadConfiguration(configFilePath);
+            dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(configuration, "English");
             dataLoader = dataLoaderFactory.CreateLoader();
             currentQuiz = new Quiz();
+            currentWord = new LanguageEntity();
+            currentLanguage = new LanguageDefinition();
 
-            foreach (var language in Configuration.Languages)
+            foreach (var language in configuration.Languages)
             {
                 var newItem = new ListBoxItem();
                 newItem.Content = $"{language.Name}";
@@ -67,8 +71,9 @@ namespace DictionaryQuiz
 
             ShowOpenFileDialog("Comma delimited (*.csv)|*.csv", SetNewDictionaryFilePath);
 
-            dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(Configuration, selectedLanguage);
+            dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(configuration, selectedLanguage);
             dataLoader = dataLoaderFactory.CreateLoader();
+            currentLanguage = configuration.Languages.First(x => x.Name == selectedLanguage);
         }
 
         private void MakeInputComponentsVisible()
@@ -98,7 +103,16 @@ namespace DictionaryQuiz
 
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(configFilePath);
+            if (InputTextField.Text == currentWord.AdditionalFields[currentLanguage.RequiredInput])
+            {
+                MessageBox.Show("Correct");
+            }
+            else
+            {
+                MessageBox.Show("Incorrect");
+            }
+
+            InputTextField.Text = string.Empty;
         }
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,14 +123,8 @@ namespace DictionaryQuiz
         private void StartNew_Click(object sender, RoutedEventArgs e)
         {
             MakeInputComponentsVisible();
-            Configuration = configurationLoader.LoadConfiguration(configFilePath);
-            QuestionsCountLabel.Content = $"1 / {Configuration.QuizPreferences.QuestionsCount}";
-        }
-
-        private void Preferences_Click(object sender, RoutedEventArgs e)
-        {
-            QuizPreferencesWindow preferencesWindow = new QuizPreferencesWindow();
-            preferencesWindow.Show();
+            configuration = configurationLoader.LoadConfiguration(configFilePath);
+            QuestionsCountLabel.Content = $"1 / {configuration.QuizPreferences.QuestionsCount}";
         }
 
         private void History_Click(object sender, RoutedEventArgs e)
@@ -126,7 +134,20 @@ namespace DictionaryQuiz
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            WordContent.Content = $"{GetRandomWord().Word}";
+            currentWord = GetRandomWord();
+            WordContent.Content = $"{currentWord.Word}";
+        }
+
+        private void QuizPreferences_Click(object sender, RoutedEventArgs e)
+        {
+            QuizPreferencesWindow preferencesWindow = new QuizPreferencesWindow();
+            preferencesWindow.Show();
+        }
+
+        private void LanguagePreferences_Click(object sender, RoutedEventArgs e)
+        {
+            LanguagePreferencesWindow preferencesWindow = new LanguagePreferencesWindow();
+            preferencesWindow.Show();
         }
     }
 }

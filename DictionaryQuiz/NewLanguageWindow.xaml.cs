@@ -2,48 +2,40 @@
 using DictionaryQuiz.Models;
 using DictionaryQuiz.Savers;
 using DictionaryQuiz.Validators;
-using System.IO;
 using System.Windows;
+using System.IO;
 
 namespace DictionaryQuiz
 {
     /// <summary>
-    /// Interaction logic for QuizPreferencesWindow.xaml
+    /// Interaction logic for NewLanguageWindow.xaml
     /// </summary>
-    public partial class QuizPreferencesWindow : Window
+    public partial class NewLanguageWindow : Window
     {
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
         private ConfigurationRoot configuration;
         private ConfigurationLoader configurationLoader;
-        private QuizPreferences preferences;
+        private LanguageDefinition definition;
         private ConfigurationSaver configurationSaver;
-        private QuizPreferencesValidator validator;
-
-        public QuizPreferencesWindow()
+        private LanguageDefinitionValidator validator;
+        public NewLanguageWindow()
         {
             InitializeComponent();
 
             configurationLoader = new ConfigurationLoader();
             configurationSaver = new ConfigurationSaver();
             configuration = configurationLoader.LoadConfiguration(configFilePath);
-            preferences = new QuizPreferences();
-            validator = new QuizPreferencesValidator();
-
-            FillInput();
+            definition = new LanguageDefinition();
+            validator = new LanguageDefinitionValidator();
         }
 
-        private void FillInput()
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            QuestionCountTextField.Text = $"{configuration.QuizPreferences.QuestionsCount}";
-        }
+            FillDefinitionByInput();
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            FillPreferencesByInput();
-
-            if (validator.Validate(preferences, out var errors))
+            if (validator.Validate(definition, out var errors))
             {
-                SaveNewPreferences();
+                AddNewDefinition();
 
                 this.Close();
             }
@@ -53,16 +45,18 @@ namespace DictionaryQuiz
             }
         }
 
-        private void SaveNewPreferences()
+        private void AddNewDefinition()
         {
-            configuration.QuizPreferences = preferences;
+            configuration.Languages.Add(definition);
 
             configurationSaver.SaveConfiguration(configFilePath, configuration);
         }
 
-        private void FillPreferencesByInput()
+        private void FillDefinitionByInput()
         {
-            preferences.QuestionsCount = Convert.ToInt32(QuestionCountTextField.Text);
+            definition.Name = NameTextField.Text;
+            definition.RequiredInput = RequiredInputTextField.Text;
+            definition.AdditionalFields = AdditionalFieldsTextField.Text.Split(',').ToList();
         }
     }
 }

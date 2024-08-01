@@ -1,6 +1,6 @@
 ﻿namespace DictionaryQuiz.Models
 {
-    public interface ILoadableData
+    internal interface IValidatable
     {
         // Marker interface, no members needed
     }

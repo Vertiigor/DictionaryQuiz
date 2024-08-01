@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DictionaryQuiz"
         mc:Ignorable="d"
-        Title="QuizPreferencesWindow" Height="200" Width="300">
+        Title="Quiz preferences" Height="200" Width="300">
     <Grid>
-        <TextBox x:Name="QuestionCountTextField" HorizontalAlignment="Left" Margin="112,14,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="QuestionCountTextField" HorizontalAlignment="Left" Margin="112,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Questions count: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="40" Height="24" Click="SaveButton_Click"/>
 
