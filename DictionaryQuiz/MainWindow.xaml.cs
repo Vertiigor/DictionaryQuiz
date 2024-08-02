@@ -22,6 +22,7 @@ namespace DictionaryQuiz
         private Quiz currentQuiz;
         private LanguageEntity currentWord;
         private LanguageDefinition currentLanguage;
+        private int QuestionsCounter = 0;
 
         public MainWindow()
         {
@@ -50,6 +51,88 @@ namespace DictionaryQuiz
             Application.Current.Shutdown();
         }
 
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            string? selectedLanguage = LanguagesListBox.SelectionBoxItem.ToString();
+
+            if (selectedLanguage == string.Empty || selectedLanguage == null)
+            {
+                MessageBox.Show("Choose the language!", "Attention!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            ShowOpenFileDialog("Comma delimited (*.csv)|*.csv", SetNewDictionaryFilePath);
+
+            StartNew.IsEnabled = true;
+        }
+
+        private void QuizPreferences_Click(object sender, RoutedEventArgs e)
+        {
+            QuizPreferencesWindow preferencesWindow = new QuizPreferencesWindow();
+            preferencesWindow.Show();
+        }
+
+        private void LanguagePreferences_Click(object sender, RoutedEventArgs e)
+        {
+            LanguagePreferencesWindow preferencesWindow = new LanguagePreferencesWindow();
+            preferencesWindow.Show();
+        }
+
+        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InputTextField.Text.ToUpper() == currentWord.AdditionalFields[currentLanguage.RequiredInput].ToUpper())
+            {
+                MessageBox.Show("Correct", "Congratulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                currentQuiz.CorrectAnswers.Add(currentWord.Word);
+            }
+            else
+            {
+                MessageBox.Show("Incorrect", "Be vigilant!", MessageBoxButton.OK, MessageBoxImage.Error);
+                currentQuiz.IncorrectAnswers.Add(currentWord.Word);
+            }
+
+            if (QuestionsCounter == configuration.QuizPreferences.QuestionsCount)
+            {
+                MessageBox.Show("P L A C E H O L D E R");
+            }
+
+            QuestionsCounter++;
+
+            SetNextWord();
+            InputTextField.Text = string.Empty;
+        }
+
+        private void DontKnowButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show($"The correct answer is: {currentWord.AdditionalFields[currentLanguage.RequiredInput]}", "Attention!", MessageBoxButton.OK, MessageBoxImage.Information);
+            SetNextWord();
+            InputTextField.Text = string.Empty;
+        }
+
+        private void StartNew_Click(object sender, RoutedEventArgs e)
+        {
+            SetNewQuiz();
+
+            MakeInputComponentsVisible();
+
+            string? selectedLanguage = LanguagesListBox.SelectionBoxItem.ToString();
+            SetNewLanguage(selectedLanguage);
+
+            QuestionsCounter = 1;
+
+            SetNextWord();
+        }
+
+        private void History_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UsingLanguageLabel.Content = "You're using: ";
+        }
+
         private LanguageEntity GetRandomWord()
         {
             var records = dataLoader.LoadData(dictionaryFilePath);
@@ -59,18 +142,9 @@ namespace DictionaryQuiz
             return (LanguageEntity)word;
         }
 
-        private void Open_Click(object sender, RoutedEventArgs e)
+        private void SetNewLanguage(string selectedLanguage)
         {
-            string? selectedLanguage = LanguagesListBox.SelectionBoxItem.ToString();
-
-            if (selectedLanguage == string.Empty || selectedLanguage == null)
-            {
-                MessageBox.Show("Choose the language!");
-                return;
-            }
-
-            ShowOpenFileDialog("Comma delimited (*.csv)|*.csv", SetNewDictionaryFilePath);
-
+            configuration = configurationLoader.LoadConfiguration(configFilePath);
             dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(configuration, selectedLanguage);
             dataLoader = dataLoaderFactory.CreateLoader();
             currentLanguage = configuration.Languages.First(x => x.Name == selectedLanguage);
@@ -78,9 +152,10 @@ namespace DictionaryQuiz
 
         private void MakeInputComponentsVisible()
         {
-            NextButton.Visibility = Visibility.Visible;
-            InputTextField.Visibility = Visibility.Visible;
+            HintLabel.Visibility = Visibility.Visible;
             CheckButton.Visibility = Visibility.Visible;
+            DontKnowButton.Visibility = Visibility.Visible;
+            InputTextField.Visibility = Visibility.Visible;
             QuestionsCountLabel.Visibility = Visibility.Visible;
         }
 
@@ -101,53 +176,19 @@ namespace DictionaryQuiz
             }
         }
 
-        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        private void SetNewQuiz()
         {
-            if (InputTextField.Text == currentWord.AdditionalFields[currentLanguage.RequiredInput])
-            {
-                MessageBox.Show("Correct");
-            }
-            else
-            {
-                MessageBox.Show("Incorrect");
-            }
-
-            InputTextField.Text = string.Empty;
+            currentQuiz.Date = DateTime.Now.ToString();
+            currentQuiz.Language = currentLanguage.Name;
+            currentQuiz.QuestionsCount = configuration.QuizPreferences.QuestionsCount;
         }
 
-        private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UsingLanguageLabel.Content = "You're using: ";
-        }
-
-        private void StartNew_Click(object sender, RoutedEventArgs e)
-        {
-            MakeInputComponentsVisible();
-            configuration = configurationLoader.LoadConfiguration(configFilePath);
-            QuestionsCountLabel.Content = $"1 / {configuration.QuizPreferences.QuestionsCount}";
-        }
-
-        private void History_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void NextButton_Click(object sender, RoutedEventArgs e)
+        private void SetNextWord()
         {
             currentWord = GetRandomWord();
             WordContent.Content = $"{currentWord.Word}";
-        }
-
-        private void QuizPreferences_Click(object sender, RoutedEventArgs e)
-        {
-            QuizPreferencesWindow preferencesWindow = new QuizPreferencesWindow();
-            preferencesWindow.Show();
-        }
-
-        private void LanguagePreferences_Click(object sender, RoutedEventArgs e)
-        {
-            LanguagePreferencesWindow preferencesWindow = new LanguagePreferencesWindow();
-            preferencesWindow.Show();
+            QuestionsCountLabel.Content = $"{QuestionsCounter} / {configuration.QuizPreferences.QuestionsCount}";
+            HintLabel.Content = $"Type a {currentLanguage.RequiredInput}";
         }
     }
 }
