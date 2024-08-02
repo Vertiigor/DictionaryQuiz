@@ -82,7 +82,7 @@ namespace DictionaryQuiz
             configuration.Languages.Remove(configuration.Languages.First(x => x.Name == definition.Name));
             configuration.Languages.Add(definition);
 
-            configurationSaver.SaveConfiguration(configFilePath, configuration);
+            configurationSaver.Save(configFilePath, configuration);
         }
 
         private void FillDefinitionByInput()

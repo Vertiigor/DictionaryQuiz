@@ -57,7 +57,7 @@ namespace DictionaryQuiz
         {
             configuration.QuizPreferences = preferences;
 
-            configurationSaver.SaveConfiguration(configFilePath, configuration);
+            configurationSaver.Save(configFilePath, configuration);
         }
 
         private void FillPreferencesByInput()

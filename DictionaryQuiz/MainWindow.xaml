@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DictionaryQuiz"
         mc:Ignorable="d"
-        Title="Dictionary quiz" Height="450" Width="500">
+        Title="Dictionary quiz" Height="450" Width="510">
     <Grid x:Name="MyGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label x:Name="WordContent" Content="Hello!" AutomationProperties.Name="WordContent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="64" Grid.Column="1" Margin="0,69,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBox x:Name="InputTextField" TextWrapping="Wrap" Height="32" Width="155" Grid.Column="1" VerticalAlignment="Top" Margin="122,194,122,0" FontSize="20" Visibility="Hidden"/>
+        <TextBox x:Name="InputTextField" TextWrapping="Wrap" Height="32" Width="155" Grid.Column="1" VerticalAlignment="Top" Margin="122,194,122,0" FontSize="20" HorizontalAlignment="Center" Visibility="Hidden"/>
         <DockPanel x:Name="DockPanel" Grid.ColumnSpan="2" LastChildFill="False">
             <Menu x:Name="MenuBar" DockPanel.Dock="Top">
                 <MenuItem x:Name="FileMenuItem" Header="File">
@@ -22,7 +22,7 @@
                     <MenuItem x:Name="Exit" Header="_Exit" Click="Exit_Click" />
                 </MenuItem>
                 <MenuItem x:Name="QuizMenuItem" Header="Quiz">
-                    <MenuItem x:Name="StartNew" Header="_Start new" Click="StartNew_Click" />
+                    <MenuItem x:Name="StartNew" Header="_Start new" Click="StartNew_Click" IsEnabled="False" />
                     <MenuItem x:Name="History" Header="_Quiz history" Click="History_Click" />
                     <MenuItem x:Name="QuizPreferences" Header="Preferences" Click="QuizPreferences_Click" />
                 </MenuItem>
@@ -35,12 +35,13 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Button x:Name="NextButton" Content="Next" Click="NextButton_Click" Grid.Column="1" Width="64" Height="20" Margin="193,169,193,0" VerticalAlignment="Top" Visibility="Hidden"/>
         <ComboBox x:Name="LanguagesListBox" Margin="100,32,100,0" Width="200" Height="32" Grid.Column="1" VerticalAlignment="Top" SelectionChanged="LanguagesListBox_SelectionChanged"/>
-        <Button x:Name="CheckButton" Content="Check" Width="64" Height="20" Grid.Column="1" VerticalAlignment="Top" Margin="193,232,193,0" Click="CheckButton_Click" Visibility="Hidden"/>
+        <Button x:Name="CheckButton" Content="Check" Width="70" Height="20" Grid.Column="1" VerticalAlignment="Top" Margin="85,232,0,0" Click="CheckButton_Click" HorizontalAlignment="Center" Visibility="Hidden"/>
         <Label x:Name="DictionaryFilePathLabel" Content="The path to the dictionary file will be written here." Grid.ColumnSpan="2" Margin="0,18,-0.1,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Bold"/>
         <Label x:Name="UsingLanguageLabel" Content="Choose the language: " Grid.ColumnSpan="2" Margin="10,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="135" Height="32" FontWeight="Bold"/>
         <Label x:Name="QuestionsCountLabel" Content="1 / 10" Margin="0,257,0,0" Width="100" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Visibility="Hidden"/>
+        <Label x:Name="HintLabel" Content="Label" Width="100" Height="32" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Margin="0,288,0,0" FontWeight="Bold" Visibility="Hidden"/>
+        <Button x:Name="DontKnowButton" Content="Don't know" Grid.ColumnSpan="2" Margin="0,232,85,0" Height="20" Width="70" Click="DontKnowButton_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
 
     </Grid>
 </Window>

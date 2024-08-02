@@ -4,9 +4,9 @@ using System.IO;
 
 namespace DictionaryQuiz.Savers
 {
-    class ConfigurationSaver
+    class ConfigurationSaver : ISaver<ConfigurationRoot>
     {
-        public void SaveConfiguration(string filePath, ConfigurationRoot configuration)
+        public void Save(string filePath, ConfigurationRoot configuration)
         {
             string jsonString = JsonConvert.SerializeObject(configuration);
 

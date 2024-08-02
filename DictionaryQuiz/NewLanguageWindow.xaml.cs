@@ -49,7 +49,7 @@ namespace DictionaryQuiz
         {
             configuration.Languages.Add(definition);
 
-            configurationSaver.SaveConfiguration(configFilePath, configuration);
+            configurationSaver.Save(configFilePath, configuration);
         }
 
         private void FillDefinitionByInput()
