@@ -1,1 +1,20 @@
-{"languages":[{"name":"English","requiredInput":"Meaning","additionalFields":["Meaning","Example in a sentence","Part of speech"]},{"name":"German","requiredInput":"Meaning","additionalFields":["Meaning"," Part of speech"]},{"name":"Japanese","requiredInput":"Kana","additionalFields":["Understanding","Kana","Meaning"]}],"quizPreferences":{"questionsCount":15}}
+{
+  "languages": [
+    {
+      "name": "English",
+      "requiredInput": "Meaning",
+      "additionalFields": [ "Meaning", "Example in a sentence", "Part of speech" ]
+    },
+    {
+      "name": "German",
+      "requiredInput": "Meaning",
+      "additionalFields": [ "Meaning", " Part of speech" ]
+    },
+    {
+      "name": "Japanese",
+      "requiredInput": "Kana",
+      "additionalFields": [ "Understanding", "Kana", "Meaning" ]
+    }
+  ],
+  "quizPreferences": { "questionsCount": 3 }
+}

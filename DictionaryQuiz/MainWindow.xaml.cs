@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using System.IO;
+using DictionaryQuiz.Savers;
 
 namespace DictionaryQuiz
 {
@@ -23,6 +24,7 @@ namespace DictionaryQuiz
         private LanguageEntity currentWord;
         private LanguageDefinition currentLanguage;
         private int QuestionsCounter = 0;
+        private QuizSaver quizSaver;
 
         public MainWindow()
         {
@@ -36,6 +38,7 @@ namespace DictionaryQuiz
             currentQuiz = new Quiz();
             currentWord = new LanguageEntity();
             currentLanguage = new LanguageDefinition();
+            quizSaver = new QuizSaver();
 
             foreach (var language in configuration.Languages)
             {
@@ -91,15 +94,19 @@ namespace DictionaryQuiz
                 currentQuiz.IncorrectAnswers.Add(currentWord.Word);
             }
 
+            InputTextField.Text = string.Empty;
+
             if (QuestionsCounter == configuration.QuizPreferences.QuestionsCount)
             {
                 MessageBox.Show("P L A C E H O L D E R");
+                quizSaver.Save(Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Data", "quizzesHistory.json"), currentQuiz);
+                StartNew_Click(sender, e);
+                return;
             }
 
             QuestionsCounter++;
 
             SetNextWord();
-            InputTextField.Text = string.Empty;
         }
 
         private void DontKnowButton_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,6 @@
 ﻿namespace DictionaryQuiz.Models
 {
-    public class Quiz : ILoadableData
+    public class Quiz : ILoadableData, ISavable
     {
         public string Date { get; set; } = string.Empty;
         public string Language { get; set; } = string.Empty;

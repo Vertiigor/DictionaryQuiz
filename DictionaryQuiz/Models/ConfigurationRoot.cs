@@ -2,7 +2,7 @@
 
 namespace DictionaryQuiz.Models
 {
-    public class ConfigurationRoot
+    public class ConfigurationRoot : ISavable
     {
         [JsonProperty("languages")]
         public List<LanguageDefinition> Languages { get; set; }

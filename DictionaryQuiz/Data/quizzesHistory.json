@@ -1,5 +1,18 @@
 {
   "quizzes": [
-
+    {
+      "Date": "8/2/2024 5:28:37 PM",
+      "Language": "Japanese",
+      "QuestionsCount": 3,
+      "CorrectAnswers": [
+        "無限",
+        "カメラ"
+      ],
+      "IncorrectAnswers": [
+        "寂しい",
+        "工事"
+      ],
+      "Conclusion": ""
+    }
   ]
 }
