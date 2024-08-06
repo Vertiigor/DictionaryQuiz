@@ -1,7 +1,7 @@
-﻿using System.IO;
-using DictionaryQuiz.Models;
+﻿using DictionaryQuiz.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace DictionaryQuiz.Loaders
 {
