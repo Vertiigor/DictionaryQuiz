@@ -14,17 +14,17 @@ namespace DictionaryQuiz
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DataLoaderFactory dataLoaderFactory;
         private string dictionaryFilePath;
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
         private ConfigurationRoot configuration;
-        private DataLoader<LanguageEntity> dataLoader;
+        private DataLoaderFactory<LanguageEntity> languageEntitiesFactory;
+        private DataLoader<LanguageEntity> languageEntitiesLoader;
         private ConfigurationLoader configurationLoader;
+        private QuizSaver quizSaver;
         private Quiz currentQuiz;
         private LanguageEntity currentWord;
         private LanguageDefinition currentLanguage;
         private int QuestionsCounter = 0;
-        private QuizSaver quizSaver;
 
         public MainWindow()
         {
@@ -33,8 +33,8 @@ namespace DictionaryQuiz
             dictionaryFilePath = string.Empty;
             configurationLoader = new ConfigurationLoader();
             configuration = configurationLoader.LoadConfiguration(configFilePath);
-            dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(configuration, "English");
-            dataLoader = dataLoaderFactory.CreateLoader();
+            languageEntitiesFactory = new LanguageEntitiesDataLoaderFactory(configuration, "English");
+            languageEntitiesLoader = languageEntitiesFactory.CreateLoader();
             currentQuiz = new Quiz();
             currentWord = new LanguageEntity();
             currentLanguage = new LanguageDefinition();
@@ -142,7 +142,7 @@ namespace DictionaryQuiz
 
         private LanguageEntity GetRandomWord()
         {
-            var records = dataLoader.LoadData(dictionaryFilePath);
+            var records = languageEntitiesLoader.LoadData(dictionaryFilePath);
             Random rand = new Random();
             var word = records[rand.Next(0, records.Count)];
 
@@ -152,8 +152,8 @@ namespace DictionaryQuiz
         private void SetNewLanguage(string selectedLanguage)
         {
             configuration = configurationLoader.LoadConfiguration(configFilePath);
-            dataLoaderFactory = new LanguageEntitiesDataLoaderFactory(configuration, selectedLanguage);
-            dataLoader = dataLoaderFactory.CreateLoader();
+            languageEntitiesFactory = new LanguageEntitiesDataLoaderFactory(configuration, selectedLanguage);
+            languageEntitiesLoader = languageEntitiesFactory.CreateLoader();
             currentLanguage = configuration.Languages.First(x => x.Name == selectedLanguage);
         }
 

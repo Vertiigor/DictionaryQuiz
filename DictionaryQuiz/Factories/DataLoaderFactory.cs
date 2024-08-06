@@ -3,7 +3,7 @@ using DictionaryQuiz.Models;
 
 namespace DictionaryQuiz.Factories
 {
-    internal abstract class DataLoaderFactory
+    internal abstract class DataLoaderFactory<T> where T : ILoadableData
     {
         protected readonly ConfigurationRoot config;
 
@@ -12,9 +12,9 @@ namespace DictionaryQuiz.Factories
             this.config = config;
         }
 
-        protected abstract DataLoader InitializeDataLoader();
+        protected abstract DataLoader<T> InitializeDataLoader();
 
-        public DataLoader CreateLoader()
+        public DataLoader<T> CreateLoader()
         {
             return this.InitializeDataLoader();
         }
