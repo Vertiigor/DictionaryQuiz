@@ -1,32 +1,64 @@
 {
   "quizzes": [
     {
-      "date": "8/6/2024 8:22:56 PM",
+      "date": "8/6/2024 11:29:15 PM",
       "language": "Japanese",
       "questionsCount": 20,
       "correctAnswers": [
-        "安い",
-        "無限",
-        "もどかしい",
-        "弱い",
-        "場所"
+        "話す",
+        "風邪",
+        "興味",
+        "観る",
+        "ありがとうございます ",
+        "休む",
+        "怖い",
+        "調べる",
+        "本",
+        "成る",
+        "古い",
+        "彼女",
+        "窓",
+        "月",
+        "運",
+        "例えば"
       ],
-      "incorrectAnswers": [],
-      "conclusion": ""
+      "incorrectAnswers": [
+        "～後",
+        "団体",
+        "任せる",
+        "伸びる"
+      ],
+      "conclusion": "Good"
     },
     {
-      "date": "8/6/2024 8:55:48 PM",
-      "language": null,
-      "questionsCount": 5,
+      "date": "8/7/2024 12:06:36 AM",
+      "language": "Japanese",
+      "questionsCount": 20,
       "correctAnswers": [
-        "おばあさんは",
-        "解決",
-        "時期",
-        "頭",
-        "目標"
+        "重い",
+        "あなた",
+        "戦争",
+        "先生",
+        "ここ",
+        "危ない",
+        "違う",
+        "取る",
+        "泳ぐ",
+        "忘れる",
+        "億",
+        "部屋",
+        "悲しい",
+        "入口",
+        "南",
+        "前の",
+        "宿題",
+        "第一次世界大戦"
       ],
-      "incorrectAnswers": [],
-      "conclusion": ""
+      "incorrectAnswers": [
+        "裁判所",
+        "個人的に"
+      ],
+      "conclusion": "Perfect!"
     }
   ]
 }
