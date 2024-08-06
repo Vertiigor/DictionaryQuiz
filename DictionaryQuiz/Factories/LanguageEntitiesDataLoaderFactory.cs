@@ -3,7 +3,7 @@ using DictionaryQuiz.Models;
 
 namespace DictionaryQuiz.Factories
 {
-    internal class LanguageEntitiesDataLoaderFactory : DataLoaderFactory
+    internal class LanguageEntitiesDataLoaderFactory : DataLoaderFactory<LanguageEntity>
     {
         public string Language { get; set; }
 
@@ -12,7 +12,7 @@ namespace DictionaryQuiz.Factories
             Language = language;
         }
 
-        protected override DataLoader InitializeDataLoader()
+        protected override DataLoader<LanguageEntity> InitializeDataLoader()
         {
             return new LanguageEntitiesDataLoader(config, Language);
         }
