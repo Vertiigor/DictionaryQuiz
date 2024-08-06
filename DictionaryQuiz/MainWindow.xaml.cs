@@ -98,15 +98,42 @@ namespace DictionaryQuiz
 
             if (QuestionsCounter == configuration.QuizPreferences.QuestionsCount)
             {
-                MessageBox.Show("P L A C E H O L D E R");
+                MessageBox.Show("You've completed this quiz");
+
+                EvaluateQuiz();
+
                 quizSaver.Save(Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Data", "quizzesHistory.json"), currentQuiz);
                 StartNew_Click(sender, e);
+
                 return;
             }
 
             QuestionsCounter++;
 
             SetNextWord();
+        }
+
+        private void EvaluateQuiz()
+        {
+            var percent = currentQuiz.CorrectAnswers.Count * 100 / (currentQuiz.IncorrectAnswers.Count + currentQuiz.CorrectAnswers.Count);
+            MessageBox.Show($"{percent}");
+
+            if (Enumerable.Range(0, 40).Contains(percent))
+            {
+                currentQuiz.Conclusion = "Bad";
+            }
+            if (Enumerable.Range(40, 65).Contains(percent))
+            {
+                currentQuiz.Conclusion = "Satisfactorily";
+            }
+            if (Enumerable.Range(65, 85).Contains(percent))
+            {
+                currentQuiz.Conclusion = "Good";
+            }
+            if (Enumerable.Range(85, 100).Contains(percent))
+            {
+                currentQuiz.Conclusion = "Perfect!";
+            }
         }
 
         private void DontKnowButton_Click(object sender, RoutedEventArgs e)
@@ -118,8 +145,6 @@ namespace DictionaryQuiz
 
         private void StartNew_Click(object sender, RoutedEventArgs e)
         {
-            SetNewQuiz();
-
             MakeInputComponentsVisible();
 
             string? selectedLanguage = LanguagesListBox.SelectionBoxItem.ToString();
@@ -127,12 +152,15 @@ namespace DictionaryQuiz
 
             QuestionsCounter = 1;
 
+            SetNewQuiz();
+
             SetNextWord();
         }
 
         private void History_Click(object sender, RoutedEventArgs e)
         {
-
+            QuizzesHistoryWindow historyWindow = new QuizzesHistoryWindow();
+            historyWindow.Show();
         }
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -185,6 +213,7 @@ namespace DictionaryQuiz
 
         private void SetNewQuiz()
         {
+            currentQuiz = new Quiz();
             currentQuiz.Date = DateTime.Now.ToString();
             currentQuiz.Language = currentLanguage.Name;
             currentQuiz.QuestionsCount = configuration.QuizPreferences.QuestionsCount;
