@@ -5,7 +5,7 @@ using System.IO;
 
 namespace DictionaryQuiz.Loaders
 {
-    internal class LanguageEntitiesDataLoader : DataLoader
+    internal class LanguageEntitiesDataLoader : DataLoader<LanguageEntity>
     {
         public readonly LanguageDefinition languageDefinition;
 
@@ -14,9 +14,9 @@ namespace DictionaryQuiz.Loaders
             languageDefinition = GetLanguageDefinition(language);
         }
 
-        public override List<ILoadableData> LoadData(string filePath)
+        public override List<LanguageEntity> LoadData(string filePath)
         {
-            var records = new List<ILoadableData>();
+            var records = new List<LanguageEntity>();
 
             using (var reader = new StreamReader(filePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
