@@ -1,11 +1,11 @@
 ﻿using DictionaryQuiz.Factories;
 using DictionaryQuiz.Loaders;
 using DictionaryQuiz.Models;
+using DictionaryQuiz.Savers;
 using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.IO;
-using DictionaryQuiz.Savers;
 
 namespace DictionaryQuiz
 {

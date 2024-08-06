@@ -2,8 +2,8 @@
 using DictionaryQuiz.Models;
 using DictionaryQuiz.Savers;
 using DictionaryQuiz.Validators;
-using System.Windows;
 using System.IO;
+using System.Windows;
 
 namespace DictionaryQuiz
 {

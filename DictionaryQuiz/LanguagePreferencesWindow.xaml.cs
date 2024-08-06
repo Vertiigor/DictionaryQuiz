@@ -1,9 +1,9 @@
 ﻿using DictionaryQuiz.Loaders;
 using DictionaryQuiz.Models;
 using DictionaryQuiz.Savers;
-using System.Windows;
-using System.IO;
 using DictionaryQuiz.Validators;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DictionaryQuiz
