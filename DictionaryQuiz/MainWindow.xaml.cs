@@ -18,7 +18,7 @@ namespace DictionaryQuiz
         private string dictionaryFilePath;
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
         private ConfigurationRoot configuration;
-        private DataLoader dataLoader;
+        private DataLoader<LanguageEntity> dataLoader;
         private ConfigurationLoader configurationLoader;
         private Quiz currentQuiz;
         private LanguageEntity currentWord;
@@ -146,7 +146,7 @@ namespace DictionaryQuiz
             Random rand = new Random();
             var word = records[rand.Next(0, records.Count)];
 
-            return (LanguageEntity)word;
+            return word;
         }
 
         private void SetNewLanguage(string selectedLanguage)

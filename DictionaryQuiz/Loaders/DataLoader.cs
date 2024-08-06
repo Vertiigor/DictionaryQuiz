@@ -2,7 +2,7 @@
 
 namespace DictionaryQuiz.Loaders
 {
-    public abstract class DataLoader
+    public abstract class DataLoader<T> where T : ILoadableData
     {
         protected readonly ConfigurationRoot config;
 
@@ -11,6 +11,6 @@ namespace DictionaryQuiz.Loaders
             this.config = config;
         }
 
-        public abstract List<ILoadableData> LoadData(string filePath);
+        public abstract List<T> LoadData(string filePath);
     }
 }
