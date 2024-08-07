@@ -16,5 +16,5 @@
       "additionalFields": [ "Understanding", "Kana", "Meaning" ]
     }
   ],
-  "quizPreferences": { "questionsCount": 20 }
+  "quizPreferences": { "questionsCount": 10 }
 }
