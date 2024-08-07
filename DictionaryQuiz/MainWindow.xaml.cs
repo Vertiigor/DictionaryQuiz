@@ -85,13 +85,13 @@ namespace DictionaryQuiz
         {
             if (InputTextField.Text.ToUpper() == currentWord.AdditionalFields[currentLanguage.RequiredInput].ToUpper())
             {
-                MessageBox.Show("Correct", "Congratulations!", MessageBoxButton.OK, MessageBoxImage.Information);
-                currentQuiz.CorrectAnswers.Add(currentWord.Word);
+                MessageBox.Show("Correct answer", "Congratulations!", MessageBoxButton.OK, MessageBoxImage.Information);
+                currentQuiz.CorrectAnswers.Add($"{currentWord.Word} - {currentWord.AdditionalFields[currentLanguage.RequiredInput]}");
             }
             else
             {
-                MessageBox.Show("Incorrect", "Be vigilant!", MessageBoxButton.OK, MessageBoxImage.Error);
-                currentQuiz.IncorrectAnswers.Add(currentWord.Word);
+                MessageBox.Show($"Incorrect answer\nThe correct answer is \"{currentWord.AdditionalFields[currentLanguage.RequiredInput]}\"", "Be vigilant!", MessageBoxButton.OK, MessageBoxImage.Error);
+                currentQuiz.IncorrectAnswers.Add($"{currentWord.Word} - {InputTextField.Text}");
             }
 
             InputTextField.Text = string.Empty;
@@ -116,7 +116,6 @@ namespace DictionaryQuiz
         private void EvaluateQuiz()
         {
             var percent = currentQuiz.CorrectAnswers.Count * 100 / (currentQuiz.IncorrectAnswers.Count + currentQuiz.CorrectAnswers.Count);
-            MessageBox.Show($"{percent}");
 
             if (Enumerable.Range(0, 40).Contains(percent))
             {
@@ -225,6 +224,18 @@ namespace DictionaryQuiz
             WordContent.Content = $"{currentWord.Word}";
             QuestionsCountLabel.Content = $"{QuestionsCounter} / {configuration.QuizPreferences.QuestionsCount}";
             HintLabel.Content = $"Type a {currentLanguage.RequiredInput}";
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.Show();
+        }
+
+        private void DeveloperInfo_Click(object sender, RoutedEventArgs e)
+        {
+            DeveloperInfoWindow developerInfoWindow = new DeveloperInfoWindow();
+            developerInfoWindow.Show();
         }
     }
 }
