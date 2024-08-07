@@ -12,7 +12,7 @@
     },
     {
       "name": "Japanese",
-      "requiredInput": "Kana",
+      "requiredInput": "Meaning",
       "additionalFields": [ "Understanding", "Kana", "Meaning" ]
     }
   ],
