@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DictionaryQuiz"
         mc:Ignorable="d"
-        Title="Language preferences" Height="180" Width="410">
+        Title="Language preferences" Height="180" Width="410" MinWidth="410" MinHeight="180">
     <Grid>
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="40" Height="25" IsEnabled="False" Click="SaveButton_Click"/>
         <Label Content="You're editing: " HorizontalAlignment="Right" Margin="0,10,135,0" VerticalAlignment="Top"/>

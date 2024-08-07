@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DictionaryQuiz"
         mc:Ignorable="d"
-        Title="New Language" Height="200" Width="410">
+        Title="New Language" Height="200" Width="410" MinWidth="410" MinHeight="200">
     <Grid>
         <Label Content="Name:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25"/>
         <Label Content="Required input: " HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
