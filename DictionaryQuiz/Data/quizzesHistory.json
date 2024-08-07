@@ -29,26 +29,5 @@
         "社長 - しゅちょ"
       ],
       "conclusion": "Good"
-    },
-    {
-      "date": "8/7/2024 7:39:14 PM",
-      "language": "Japanese",
-      "questionsCount": 10,
-      "correctAnswers": [
-        "名前 - なまえ",
-        "夏 - なつ",
-        "千 - せん",
-        "知識 - ちしき",
-        "ごちそうさまでした  - ",
-        "またね  - ",
-        "破壊する - はかいする"
-      ],
-      "incorrectAnswers": [
-        "兵舎 - へいし",
-        "記事 - きごと",
-        "皆さん - みんなさん"
-      ],
-      "conclusion": "Good"
-    }
   ]
 }
