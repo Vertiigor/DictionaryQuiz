@@ -12,9 +12,9 @@
     },
     {
       "name": "Japanese",
-      "requiredInput": "Kana",
+      "requiredInput": "Meaning",
       "additionalFields": [ "Understanding", "Kana", "Meaning" ]
     }
   ],
-  "quizPreferences": { "questionsCount": 5 }
+  "quizPreferences": { "questionsCount": 15 }
 }
