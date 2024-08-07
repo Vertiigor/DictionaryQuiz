@@ -1,14 +1,22 @@
-
 # DictionaryQuiz
 
 ### DictionaryQuiz is a language learning assistant designed for people who want to learn languages more effectively by repeating words from their own dictionaries.
 
 ## Table of Contents
 
+- [Installation](#installation)
 - [Features](#features)
 - [Usage](#usage)
 - [Screenshots](#screenshots)
 - [License](#license)
+
+## Installation
+
+- Go to the `"Releases"` tab on GithHub repository.
+- Find the newest release and install `DictionaryQuiz.zip`.
+- Extract the main folder from the zip file and open it.
+- Then open folders `bin` => `Debug` => `net8.0-windows`.
+- In the folder `net8.0-windows` open `.EXE` file "DictionaryQuiz".
 
 ## Features
 
