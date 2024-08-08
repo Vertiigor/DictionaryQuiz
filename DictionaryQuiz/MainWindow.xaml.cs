@@ -25,6 +25,7 @@ namespace DictionaryQuiz
         private LanguageEntity currentWord;
         private LanguageDefinition currentLanguage;
         private int QuestionsCounter = 0;
+        private List<LanguageEntity> completedWords;
 
         public MainWindow()
         {
@@ -94,6 +95,8 @@ namespace DictionaryQuiz
                 currentQuiz.IncorrectAnswers.Add($"{currentWord.Word} - {InputTextField.Text}");
             }
 
+            completedWords.Add(currentWord);
+
             InputTextField.Text = string.Empty;
 
             if (QuestionsCounter == configuration.QuizPreferences.QuestionsCount)
@@ -150,6 +153,7 @@ namespace DictionaryQuiz
             SetNewLanguage(selectedLanguage);
 
             QuestionsCounter = 1;
+            completedWords = new List<LanguageEntity>();
 
             SetNewQuiz();
 
@@ -170,6 +174,15 @@ namespace DictionaryQuiz
         private LanguageEntity GetRandomWord()
         {
             var records = languageEntitiesLoader.LoadData(dictionaryFilePath);
+
+            if (configuration.QuizPreferences.AllowDuplicates == false)
+            {
+                foreach(var completed in completedWords)
+                {
+                    records = records.Where(x => x.Word != completed.Word).ToList();
+                }
+            }
+
             Random rand = new Random();
             var word = records[rand.Next(0, records.Count)];
 

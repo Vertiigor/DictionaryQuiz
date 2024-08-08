@@ -35,6 +35,7 @@ namespace DictionaryQuiz
         private void FillInput()
         {
             QuestionCountTextField.Text = $"{configuration.QuizPreferences.QuestionsCount}";
+            AllowDuplicatesCheckBox.IsChecked = configuration.QuizPreferences.AllowDuplicates;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -63,6 +64,7 @@ namespace DictionaryQuiz
         private void FillPreferencesByInput()
         {
             preferences.QuestionsCount = Convert.ToInt32(QuestionCountTextField.Text);
+            preferences.AllowDuplicates = (bool)AllowDuplicatesCheckBox.IsChecked;
         }
     }
 }
