@@ -1,5 +1,6 @@
-﻿using DictionaryQuiz.Loaders;
+﻿using DictionaryQuiz.Factories;
 using DictionaryQuiz.Models;
+using DictionaryQuiz.Services;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,19 +15,21 @@ namespace DictionaryQuiz
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
         private string historyFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Data", "quizzesHistory.json");
         private ConfigurationRoot configuration;
-        private ConfigurationLoader configurationLoader;
-        private QuizzesLoader quizzesLoader;
+        private ServicesFactory servicesFactory;
+        private ConfigurationService configurationService;
+        private QuizzesService quizzesService;
         private List<Quiz> quizzes;
 
         public QuizzesHistoryWindow()
         {
             InitializeComponent();
 
-            configurationLoader = new ConfigurationLoader();
-            configuration = configurationLoader.LoadConfiguration(configFilePath);
-            quizzesLoader = new QuizzesLoader(configuration);
+            configurationService = new ConfigurationService();
+            configuration = configurationService.Load(configFilePath);
+            servicesFactory = new ServicesFactory(configuration);
+            quizzesService = servicesFactory.CreateService<Quiz>() as QuizzesService;
 
-            quizzes = quizzesLoader.LoadData(historyFilePath);
+            quizzes = quizzesService.GetAll(historyFilePath).ToList();
 
             foreach (var quiz in quizzes)
             {

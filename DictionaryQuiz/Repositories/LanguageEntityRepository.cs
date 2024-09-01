@@ -1,24 +1,23 @@
 ﻿using CsvHelper;
 using DictionaryQuiz.Models;
+using DictionaryQuiz.Repositories.Interfaces;
 using System.Globalization;
 using System.IO;
 
-namespace DictionaryQuiz.Loaders
+namespace DictionaryQuiz.Repositories
 {
-    internal class LanguageEntitiesDataLoader : DataLoader<LanguageEntity>
+    internal class LanguageEntityRepository : Repository<LanguageEntity>
     {
-        public readonly LanguageDefinition languageDefinition;
+        private string languageName = string.Empty;
+        public LanguageDefinition languageDefinition;
 
-        public LanguageEntitiesDataLoader(ConfigurationRoot config, string language) : base(config)
-        {
-            languageDefinition = GetLanguageDefinition(language);
-        }
+        public LanguageEntityRepository(ConfigurationRoot configuration) : base(configuration) { }
 
-        public override List<LanguageEntity> LoadData(string filePath)
+        public override IEnumerable<LanguageEntity> GetAll(string path)
         {
             var records = new List<LanguageEntity>();
 
-            using (var reader = new StreamReader(filePath))
+            using (var reader = new StreamReader(path))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var dictionaryRecords = csv.GetRecords<dynamic>().ToList();
@@ -38,17 +37,6 @@ namespace DictionaryQuiz.Loaders
                 }
             }
             return records;
-        }
-
-        private LanguageDefinition GetLanguageDefinition(string language)
-        {
-            var definition = config.Languages.FirstOrDefault(x => x.Name == language);
-            if (definition == null)
-            {
-                throw new ArgumentException($"No loader found for the language: {language}");
-            }
-
-            return definition;
         }
     }
 }

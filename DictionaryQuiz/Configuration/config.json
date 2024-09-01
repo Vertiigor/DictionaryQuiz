@@ -11,13 +11,18 @@
       "additionalFields": [ "Meaning", " Part of speech" ]
     },
     {
+      "name": "Kazakh",
+      "requiredInput": "Meaning",
+      "additionalFields": [ "Meaning" ]
+    },
+    {
       "name": "Japanese",
       "requiredInput": "Kana",
-      "additionalFields": [ "Understanding", "Kana", "Meaning" ]
+      "additionalFields": [ "Kana", "Meaning" ]
     }
   ],
   "quizPreferences": {
-    "questionsCount": 20,
+    "questionsCount": 1000,
     "allowDuplicates": false
   }
 }

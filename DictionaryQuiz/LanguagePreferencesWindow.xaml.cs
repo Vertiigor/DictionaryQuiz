@@ -1,6 +1,5 @@
-﻿using DictionaryQuiz.Loaders;
-using DictionaryQuiz.Models;
-using DictionaryQuiz.Savers;
+﻿using DictionaryQuiz.Models;
+using DictionaryQuiz.Services;
 using DictionaryQuiz.Validators;
 using System.IO;
 using System.Windows;
@@ -15,18 +14,16 @@ namespace DictionaryQuiz
     {
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
         private ConfigurationRoot configuration;
-        private ConfigurationLoader configurationLoader;
+        private ConfigurationService configurationService;
         private LanguageDefinition definition;
-        private ConfigurationSaver configurationSaver;
         private LanguageDefinitionValidator validator;
 
         public LanguagePreferencesWindow()
         {
             InitializeComponent();
 
-            configurationLoader = new ConfigurationLoader();
-            configurationSaver = new ConfigurationSaver();
-            configuration = configurationLoader.LoadConfiguration(configFilePath);
+            configurationService = new ConfigurationService();
+            configuration = configurationService.Load(configFilePath);
             definition = new LanguageDefinition();
             validator = new LanguageDefinitionValidator();
 
@@ -82,7 +79,7 @@ namespace DictionaryQuiz
             configuration.Languages.Remove(configuration.Languages.First(x => x.Name == definition.Name));
             configuration.Languages.Add(definition);
 
-            configurationSaver.Save(configFilePath, configuration);
+            configurationService.Save(configFilePath, configuration);
         }
 
         private void FillDefinitionByInput()

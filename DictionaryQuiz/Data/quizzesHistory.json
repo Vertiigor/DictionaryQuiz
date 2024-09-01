@@ -1,5 +1,18 @@
 {
   "quizzes": [
-
+    {
+      "date": "9/2/2024 1:46:00 AM",
+      "language": "Japanese",
+      "questionsCount": 5,
+      "correctAnswers": [
+        "成分 - せいぶん",
+        "簡単な - かんたんな",
+        "脱ぐ - ぬぐ",
+        "晴れた天気 - はれたてんき",
+        "生徒 - せいと"
+      ],
+      "incorrectAnswers": [],
+      "conclusion": "Perfect!"
+    }
   ]
 }

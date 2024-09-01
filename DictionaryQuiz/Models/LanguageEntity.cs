@@ -1,6 +1,9 @@
-﻿namespace DictionaryQuiz.Models
+﻿using DictionaryQuiz.Models.Abstractions;
+using DictionaryQuiz.Models.Interfaces;
+
+namespace DictionaryQuiz.Models
 {
-    internal class LanguageEntity : ILoadableData
+    internal class LanguageEntity : DataEntity, ILoadableData
     {
         public int ID { get; set; }
         public string Word { get; set; } = string.Empty;

@@ -1,7 +1,6 @@
 ﻿using DictionaryQuiz.Factories;
-using DictionaryQuiz.Loaders;
 using DictionaryQuiz.Models;
-using DictionaryQuiz.Savers;
+using DictionaryQuiz.Services;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
@@ -17,10 +16,10 @@ namespace DictionaryQuiz
         private string dictionaryFilePath;
         private string configFilePath = Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Configuration", "config.json");
         private ConfigurationRoot configuration;
-        private DataLoaderFactory<LanguageEntity> languageEntitiesFactory;
-        private DataLoader<LanguageEntity> languageEntitiesLoader;
-        private ConfigurationLoader configurationLoader;
-        private QuizSaver quizSaver;
+        private ServicesFactory servicesFactory;
+        private LanguageEntitiesService languageEntitiesService;
+        private ConfigurationService configurationService;
+        private QuizzesService quizzesService;
         private Quiz currentQuiz;
         private LanguageEntity currentWord;
         private LanguageDefinition currentLanguage;
@@ -32,14 +31,14 @@ namespace DictionaryQuiz
             InitializeComponent();
 
             dictionaryFilePath = string.Empty;
-            configurationLoader = new ConfigurationLoader();
-            configuration = configurationLoader.LoadConfiguration(configFilePath);
-            languageEntitiesFactory = new LanguageEntitiesDataLoaderFactory(configuration, "English");
-            languageEntitiesLoader = languageEntitiesFactory.CreateLoader();
+            configurationService = new ConfigurationService();
+            configuration = configurationService.Load(configFilePath);
+            servicesFactory = new ServicesFactory(configuration);
+            languageEntitiesService = servicesFactory.CreateService<LanguageEntity>() as LanguageEntitiesService;
             currentQuiz = new Quiz();
             currentWord = new LanguageEntity();
             currentLanguage = new LanguageDefinition();
-            quizSaver = new QuizSaver();
+            quizzesService = servicesFactory.CreateService<Quiz>() as QuizzesService;
 
             foreach (var language in configuration.Languages)
             {
@@ -105,7 +104,7 @@ namespace DictionaryQuiz
 
                 EvaluateQuiz();
 
-                quizSaver.Save(Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Data", "quizzesHistory.json"), currentQuiz);
+                quizzesService.SaveQuiz(Path.Combine(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\")), "Data", "quizzesHistory.json"), currentQuiz);
                 StartNew_Click(sender, e);
 
                 return;
@@ -173,11 +172,11 @@ namespace DictionaryQuiz
 
         private LanguageEntity GetRandomWord()
         {
-            var records = languageEntitiesLoader.LoadData(dictionaryFilePath);
+            var records = languageEntitiesService.GetAll(dictionaryFilePath).ToList();
 
             if (configuration.QuizPreferences.AllowDuplicates == false)
             {
-                foreach(var completed in completedWords)
+                foreach (var completed in completedWords)
                 {
                     records = records.Where(x => x.Word != completed.Word).ToList();
                 }
@@ -191,9 +190,8 @@ namespace DictionaryQuiz
 
         private void SetNewLanguage(string selectedLanguage)
         {
-            configuration = configurationLoader.LoadConfiguration(configFilePath);
-            languageEntitiesFactory = new LanguageEntitiesDataLoaderFactory(configuration, selectedLanguage);
-            languageEntitiesLoader = languageEntitiesFactory.CreateLoader();
+            configuration = configurationService.Load(configFilePath);
+            languageEntitiesService.Language = selectedLanguage;
             currentLanguage = configuration.Languages.First(x => x.Name == selectedLanguage);
         }
 

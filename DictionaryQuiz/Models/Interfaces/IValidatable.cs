@@ -1,4 +1,4 @@
-﻿namespace DictionaryQuiz.Models
+﻿namespace DictionaryQuiz.Models.Interfaces
 {
     internal interface IValidatable
     {

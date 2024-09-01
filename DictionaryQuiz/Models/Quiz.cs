@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using DictionaryQuiz.Models.Abstractions;
+using DictionaryQuiz.Models.Interfaces;
+using Newtonsoft.Json;
 
 namespace DictionaryQuiz.Models
 {
-    public class Quiz : ILoadableData, ISavable
+    public class Quiz : DataEntity, ILoadableData, ISavable
     {
         [JsonProperty("date")]
         public string Date { get; set; } = string.Empty;

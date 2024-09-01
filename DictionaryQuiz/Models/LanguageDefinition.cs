@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DictionaryQuiz.Models.Interfaces;
+using Newtonsoft.Json;
 
 namespace DictionaryQuiz.Models
 {

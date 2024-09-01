@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using DictionaryQuiz.Models.Abstractions;
+using DictionaryQuiz.Models.Interfaces;
+using Newtonsoft.Json;
 
 namespace DictionaryQuiz.Models
 {
-    public class ConfigurationRoot : ISavable
+    public class ConfigurationRoot : DataEntity, ISavable
     {
         [JsonProperty("languages")]
         public List<LanguageDefinition> Languages { get; set; }
